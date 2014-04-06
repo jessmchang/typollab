@@ -45,6 +45,16 @@ function change(a, type) {
                 }
             }
         }
+        if(type=="block"){
+            // console.log("para only");
+            // console.log("pElements " + pElements[0]);
+            for(b in blockElements){
+                if(blockElements[b] instanceof Element) {
+                    console.log(b);
+                    blockElements[b].style.fontFamily=currentFont;
+                }
+            }
+        }
         
         
         socket.emit('div-change', { currentFont: currentFont, type: type });
@@ -80,6 +90,14 @@ function generateFonts(){
             b.setAttribute('onclick', 'change(this, "para");');
             para.appendChild(b);
         }
+        for(font in fonts){
+            var b = document.createElement('a');
+            var bText = document.createTextNode(fonts[font]);
+            b.appendChild(bText);
+            b.href = "#";
+            b.setAttribute('onclick', 'change(this, "block");');
+            block.appendChild(b);
+        }
     }
  
 
@@ -95,9 +113,11 @@ window.onload = function() {
     h1Elements=document.querySelectorAll('h1');
     h2Elements=document.querySelectorAll('h2');
     pElements=document.querySelectorAll('p');
+    blockElements=document.querySelectorAll('blockquote');
     header=document.getElementById("header");
     header2=document.getElementById("header2");
     para=document.getElementById("para");
+    block=document.getElementById("block")
 
     generateFonts();
    
@@ -137,6 +157,13 @@ window.onload = function() {
             for(p in pElements) {
                 if(pElements[p] instanceof Element) {
                     pElements[p].style.fontFamily=data.currentFont;
+                }
+            }
+        }
+         if(data.type=="block"){
+            for(b in blockElements) {
+                if(blockElements[b] instanceof Element) {
+                    blockElements[b].style.fontFamily=data.currentFont;
                 }
             }
         }

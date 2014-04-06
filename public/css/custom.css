@@ -38,6 +38,11 @@ p{
 	font-family: "Georgia";
 }
 
+blockquote{
+	color:#DACE9A;
+	font-style:italic;
+}
+
 .clean{
 	color: #fff;
 }
