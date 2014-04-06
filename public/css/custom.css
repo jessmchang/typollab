@@ -16,10 +16,13 @@ html,body{
 	width:100%;
 }
 
+.rightborder{
+	border-right:2px;
+}
+
 h1{
 	font-size:7em;
 	font-family:'Montserrat';
-	font-weight:700;
 	color: #c5d1a3;
 }
 

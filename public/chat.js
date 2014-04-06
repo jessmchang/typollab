@@ -120,7 +120,7 @@ window.onload = function() {
     field = document.getElementById("field");
     sendButton = document.getElementById("send");
     textarea = document.getElementById("textarea");
-    fonts=['Montserrat', 'Georgia', "Times New Roman", "Helvetica", "Arial"];
+    fonts=['Montserrat', 'Georgia', "Times New Roman", "Helvetica", "Arial", "Lato", "Open Sans", "Arvo", "Vollkorn", "Abril Fatface", "Ubuntu"];
     h1Elements=document.querySelectorAll('h1');
     h2Elements=document.querySelectorAll('h2');
     pElements=document.querySelectorAll('p');
@@ -130,6 +130,9 @@ window.onload = function() {
     para=document.getElementById("para");
     block=document.getElementById("block")
     cssCopyText = document.getElementById("copytext");
+    //bg, h1, h2, p ???
+    schemeOne = ["#E1DCE3", "#413745", "#FDBAB9", "#413745"];
+    schemeTwo= ["#F9F8F3", "#38341C", "#CC7700", "#38341C"];
 
     generateFonts();
  
@@ -146,20 +149,6 @@ window.onload = function() {
             console.log("There is a problem:", data);
         }
     });
-
-    // socket.on('css', function (data) {
-    //     console.log("success");
-    //     if(data.css) {
-    //         cssCopyText.innerHTML = data.css;
-    //     }
-    // });
-
-    // socket.on('css', function (data) {
-    //     console.log("success");
-    //     if(data.css) {
-    //         cssCopyText.innerHTML = data.css;
-    //     }
-    // });
 
     socket.on('div-change', function (data) {
         // console.log(data.currentFont);
