@@ -111,6 +111,13 @@ function generateFonts(){
             block.appendChild(b);
         }
     }
+
+function randomColor() {
+    //generate a random number
+    var randomNumber = Math.floor(Math.random()*(schemes.length));
+    var randomScheme = schemes[randomNumber];
+    return randomScheme;
+}
  
 
 
@@ -119,6 +126,7 @@ window.onload = function() {
     socket = io.connect('10.24.25.63:5000');
     field = document.getElementById("field");
     sendButton = document.getElementById("send");
+    schemeButton = document.getElementById("scheme");
     textarea = document.getElementById("textarea");
     fonts=['Montserrat', 'Georgia', "Times New Roman", "Helvetica", "Arial", "Lato", "Open Sans", "Arvo", "Vollkorn", "Abril Fatface", "Ubuntu"];
     h1Elements=document.querySelectorAll('h1');
@@ -130,9 +138,12 @@ window.onload = function() {
     para=document.getElementById("para");
     block=document.getElementById("block")
     cssCopyText = document.getElementById("copytext");
+
     //bg, h1, h2, p ???
-    schemeOne = ["#E1DCE3", "#413745", "#FDBAB9", "#413745"];
-    schemeTwo= ["#F9F8F3", "#38341C", "#CC7700", "#38341C"];
+    schemeOne= ["#43404d", "#c5d1a3", "#BFB39B", "#fff"];
+    schemeTwo = ["#E1DCE3", "#413745", "#FDBAB9", "#413745"];
+    schemeThree= ["#F9F8F3", "#38341C", "#CC7700", "#38341C"];
+    schemes=[schemeOne, schemeTwo, schemeThree];
 
     generateFonts();
  
@@ -200,6 +211,32 @@ window.onload = function() {
         socket.emit('send', { message: text });
         field.value="";
     };
+
+    schemeButton.onclick = function() {
+        var randomScheme = randomColor();
+        console.log("random " + randomScheme);
+        document.body.style.background = randomScheme[0];
+        for(h in h1Elements){
+            if(h1Elements[h] instanceof Element) {
+                h1Elements[h].style.color = randomScheme[1];
+            }
+        }
+        for(h in h2Elements){
+            if(h2Elements[h] instanceof Element) {
+                h2Elements[h].style.color = randomScheme[2];
+            }
+        }
+        for(p in pElements){
+            if(pElements[p] instanceof Element) {
+                pElements[p].style.color = randomScheme[3];
+            }
+        }
+        for(b in blockElements){
+            if(blockElements[b] instanceof Element) {
+                blockElements[b].style.color = randomScheme[2];
+            }
+        }
+    }
 
     cssCopyText.onclick = function(){
         this.select();
