@@ -1,11 +1,18 @@
 {
-    "name": "RealTimeWebChat",
-    "version": "0.0.0",
-    "description": "Real time web chat",
+    "name": "Typollab",
+    "version": "0.0.0-1",
+    "description": "Real time",
     "dependencies": {
         "socket.io": "latest",
         "express": "latest",
         "jade": "latest"
     },
-    "author": "developer"
+    "author": "developer",
+    "subdomain": "typollab",
+    "scripts": {
+        "start": "index.js"
+    },
+    "engines": {
+        "node": "0.10.x"
+    }
 }
