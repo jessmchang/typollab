@@ -1,6 +1,5 @@
 var express = require("express");
 var app = express();
-var port = 5000;
 
 
 app.set('views', __dirname + '/tpl');
@@ -12,7 +11,7 @@ app.get("/", function(req, res){
 
 app.use(express.static(__dirname + '/public'));
 
-var io = require('socket.io').listen(app.listen(port));
+var io = require('socket.io').listen(app.listen(process.env.PORT || 5000));
 
 io.sockets.on('connection', function (socket) {
 	var client = socket.id;
@@ -29,4 +28,4 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-console.log("Listening on port " + port);
+console.log("Listening on port " + process.env.PORT || 5000);
