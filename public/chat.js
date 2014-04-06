@@ -8,6 +8,7 @@ var content;
 var header;
 
 
+
 // function getRandomFont() {
 //         var randomNumber = Math.floor(Math.random()*(fonts.length));
 //         // console.log(fonts[randomNumber]);
@@ -18,6 +19,18 @@ var header;
 function change(a, type) {
         // var randomFont = getRandomFont();
         var currentFont = a.innerHTML;
+
+        header=h1Elements[0];
+        var headerTag = header.tagName;
+
+        header2 = h2Elements[0];
+        var header2Tag = header2.tagName;
+
+        para = pElements[0];
+        var paraTag = para.tagName;
+
+        block = blockElements[0];
+        var blockTag = block.tagName;
         // console.log("type " + type);
         if(type=="header"){
             // console.log("current " + currentFont);
@@ -55,9 +68,8 @@ function change(a, type) {
                 }
             }
         }
-        
-        
-        socket.emit('div-change', { currentFont: currentFont, type: type });
+
+        socket.emit('div-change', { currentFont: currentFont, type: type, headerTag: headerTag, header: header.style, header2Tag: header2Tag, header2: header2.style, paraTag: paraTag, para: para.style, blockTag: blockTag, block: block.style});
     }
 
 /*
@@ -103,13 +115,12 @@ function generateFonts(){
 
 
 window.onload = function() {
- 
     messages = [];
     socket = io.connect('10.24.25.63:5000');
     field = document.getElementById("field");
     sendButton = document.getElementById("send");
-    content = document.getElementById("content");
-    fonts=['Montserrat', 'Georgia', "Times New Roman", "Helvetica"];
+    textarea = document.getElementById("textarea");
+    fonts=['Montserrat', 'Georgia', "Times New Roman", "Helvetica", "Arial"];
     h1Elements=document.querySelectorAll('h1');
     h2Elements=document.querySelectorAll('h2');
     pElements=document.querySelectorAll('p');
@@ -118,27 +129,47 @@ window.onload = function() {
     header2=document.getElementById("header2");
     para=document.getElementById("para");
     block=document.getElementById("block")
+    cssCopyText = document.getElementById("copytext");
 
     generateFonts();
-   
  
     socket.on('message', function (data) {
         if(data.message) {
             messages.push(data.message);
             var html = '';
             for(var i=0; i<messages.length; i++) {
-                html += messages[i] + '<br />';
+                html += messages[i] + '\n';
             }
-            content.innerHTML = html;
-            content.scrollTop = content.scrollHeight;
+            textarea.innerHTML = html;
+            textarea.scrollTop = textarea.scrollHeight;
         } else {
             console.log("There is a problem:", data);
         }
     });
 
+    // socket.on('css', function (data) {
+    //     console.log("success");
+    //     if(data.css) {
+    //         cssCopyText.innerHTML = data.css;
+    //     }
+    // });
+
+    // socket.on('css', function (data) {
+    //     console.log("success");
+    //     if(data.css) {
+    //         cssCopyText.innerHTML = data.css;
+    //     }
+    // });
+
     socket.on('div-change', function (data) {
         // console.log(data.currentFont);
-        console.log(data.type);
+        console.log(data.header);
+        console.log(data.header.cssText);
+        // console.log(data.header.fontSize);
+        cssCopyText.innerHTML=data.headerTag.toLowerCase() + "{\n" + data.header.cssText + "\n}" + 
+                        '\n' + data.header2Tag.toLowerCase() + "{\n" + data.header2.cssText + "\n}" +
+                        '\n' + data.paraTag.toLowerCase() + "{\n" + data.para.cssText + "\n}" +
+                        '\n' + data.blockTag.toLowerCase() + "{\n" + data.block.cssText + "\n}";
         if(data.type=="header"){
              for(h in h1Elements) {
                 if(h1Elements[h] instanceof Element) {
@@ -160,14 +191,16 @@ window.onload = function() {
                 }
             }
         }
-         if(data.type=="block"){
+        if(data.type=="block"){
             for(b in blockElements) {
                 if(blockElements[b] instanceof Element) {
                     blockElements[b].style.fontFamily=data.currentFont;
                 }
             }
         }
-           
+        
+        
+         
     });
 
 
@@ -179,8 +212,12 @@ window.onload = function() {
         field.value="";
     };
 
+    cssCopyText.onclick = function(){
+        this.select();
+    }
 
 
+    
     
         //header font has to change
 }
