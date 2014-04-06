@@ -87,7 +87,7 @@ function generateFonts(){
 window.onload = function() {
  
     messages = [];
-    socket = io.connect('10.24.25.63:3700');
+    socket = io.connect('10.24.25.63:5000');
     field = document.getElementById("field");
     sendButton = document.getElementById("send");
     content = document.getElementById("content");
