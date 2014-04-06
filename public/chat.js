@@ -27,6 +27,14 @@ function change(a, type) {
                 }
             }
         }
+        if(type=="header2"){
+            // console.log("current " + currentFont);
+            for(h in h2Elements) {
+                if(h2Elements[h] instanceof Element) {
+                    h2Elements[h].style.fontFamily=currentFont;
+                }
+            }
+        }
         if(type=="para"){
             // console.log("para only");
             // console.log("pElements " + pElements[0]);
@@ -57,6 +65,14 @@ function generateFonts(){
             header.appendChild(a);
         }
         for(font in fonts){
+            var a = document.createElement('a');
+            var aText = document.createTextNode(fonts[font]);
+            a.appendChild(aText);
+            a.href = "#";
+            a.setAttribute('onclick', 'change(this, "header2");');
+            header2.appendChild(a);
+        }
+        for(font in fonts){
             var b = document.createElement('a');
             var bText = document.createTextNode(fonts[font]);
             b.appendChild(bText);
@@ -77,6 +93,7 @@ window.onload = function() {
     content = document.getElementById("content");
     fonts=['Montserrat', 'Georgia', "Times New Roman"];
     h1Elements=document.querySelectorAll('h1');
+    h2Elements=document.querySelectorAll('h2');
     pElements=document.querySelectorAll('p');
     header=document.getElementById("header");
     header2=document.getElementById("header2");
@@ -106,6 +123,13 @@ window.onload = function() {
              for(h in h1Elements) {
                 if(h1Elements[h] instanceof Element) {
                     h1Elements[h].style.fontFamily=data.currentFont;
+                }
+            }
+        }
+        if(data.type=="header2"){
+             for(h in h2Elements) {
+                if(h2Elements[h] instanceof Element) {
+                    h2Elements[h].style.fontFamily=data.currentFont;
                 }
             }
         }
