@@ -10,7 +10,7 @@
     "author": "developer",
     "subdomain": "typollab",
     "scripts": {
-        "start": "index.js"
+        "start": "node index.js"
     },
     "engines": {
         "node": "0.10.x"
